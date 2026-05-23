@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@iconify-react/maki": "^1.0.2",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.95",
     "@tailwindcss/postcss": "^4.3.0",
     "gsap": "^3.15.0",
     "postcss": "^8.5.15",

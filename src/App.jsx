@@ -25,7 +25,7 @@ export const App = () => {
   }, []);
   return (
   <div className="w-full min-h-screen overflow-x-hidden flex flex-col relative">
-    <div ref={cursorRef} className="w-8 h-8 rounded-full border-white border flex justify-center items-center absolute top-0 left-0 z-0">
+    <div ref={cursorRef} className="w-8 h-8 rounded-full border-white border flex justify-center items-center absolute top-0 left-0 z-10">
       <div className="w-2 h-2 flex bg-white">
       </div>
     </div>
