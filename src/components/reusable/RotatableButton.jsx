@@ -4,6 +4,7 @@ import gsap from 'gsap'
 export const RotatableButton = ({title,cursor}) => {
     const currentText = useRef(null);
     const nextText = useRef(null);
+    const buttonViewRef = useRef(null);
     useEffect(() =>{
         gsap.fromTo(
             currentText.current,
@@ -73,9 +74,18 @@ export const RotatableButton = ({title,cursor}) => {
             borderStyle:"dotted"
         })
     }
+
+    const handleButtonAimation = () =>{
+        gsap.to(buttonViewRef.current,{
+            color:"green",
+            background:'blue'
+        })
+    }
   return (
     <button onMouseLeave={() => {handleButtonMouseLeave()}} onMouseEnter={() => {handleButtonMouseEnter(); console.log("hello");}} className='cursor-pointer z-20 hover:text-(--secondary-text) button-container px-2 justify-center overflow-hidden flex flex-col'>
-        <span ref={currentText} className=''>{title}</span>
+        <span onClick={() => {
+            handleButtonAimation(); console.log("hello")
+        }} ref={buttonViewRef} ref={currentText} className=''>{title}</span>
         <span ref={nextText} className='opacity-0'>{title}</span>
     </button>
   )

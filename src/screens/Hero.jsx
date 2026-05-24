@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 import { RotatableButton } from '../components/reusable/RotatableButton';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-
+import heroVideo from '../assets/videos/14520076_1920_1080_24fps.mp4';
+import PlusIcon from '@iconify-react/uiw/plus';
 
 export const Hero = ({cursorRef}) => {
     const leftText = useRef(null);
@@ -18,6 +18,8 @@ export const Hero = ({cursorRef}) => {
     const scrollerBox = useRef(null);
     const centerImageCard = useRef(null);
     const bottomSection = useRef(null);
+    const videoControl = useRef(null);
+    const mySummeryPage = useRef(null);
     // const nextRotate = useRef(null);
     useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -31,6 +33,7 @@ export const Hero = ({cursorRef}) => {
             duration: 1.2,
             ease: "power4.out",
             stagger: 0.15,
+            zIndex:10
         }
     );
 
@@ -56,10 +59,12 @@ export const Hero = ({cursorRef}) => {
                 opacity: 1,
                 ease: "none",
                 duration: 0.3,
+                zIndex:10
             }
         )
         .to(bottomSection.current,{
-            opacity:0
+            opacity:0,
+            zIndex:0
         })
         .fromTo(
             leftText.current,
@@ -70,6 +75,7 @@ export const Hero = ({cursorRef}) => {
                 x: -240,
                 ease: "none",
                 duration: 0.35,
+                zIndex:10
             },
             0.35
         )
@@ -82,8 +88,35 @@ export const Hero = ({cursorRef}) => {
                 x: 240,
                 ease: "none",
                 duration: 0.35,
+                zIndex:10
             },
             0.35
+        )
+        .fromTo(centerImageCard.current,
+            {
+                width:0,
+                height:0,
+                left:"46%"
+            },
+            {
+                width:"100vw",
+                height:"100vh",
+                borderRadius:"0px",
+                left:"50%",
+                zIndex:20
+            }
+            ,"-=0.3"
+        )
+        .fromTo(
+            ".plus-icon",
+            {
+                opacity: 0,
+            },
+            {
+                opacity: 1,
+                stagger: 0.08,
+            },
+            "-=0.4"
         )
         .fromTo(
             currentRotate.current,
@@ -100,21 +133,22 @@ export const Hero = ({cursorRef}) => {
                 opacity: 0,
                 stagger: 0.2,
                 ease: "power3.inOut",
+                zIndex:10
             },
             0
         )
-        .fromTo(centerImageCard.current,
+        .fromTo(mySummeryPage.current,
             {
                 width:0,
                 height:0,
             },
             {
-                width:"400px",
-                height:"200px",
-                left:"47%",
+                width:"100vw",
+                height:"100vh",
+                left:0,
+                top:0
             }
         )
-
     return () => {
         splitTimeline.scrollTrigger?.kill();
         splitTimeline.kill();
@@ -126,10 +160,17 @@ export const Hero = ({cursorRef}) => {
     
   return(
     <section className="hero-container overflow-hidden w-full h-screen flex flex-col justify-between px-12 pt-12 max-sm:px-6 max-sm:pt-6 bg-black text-white relative">
-        <div ref={centerImageCard} className=' rounded-2xl bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30'>
-
+        <div ref={centerImageCard} className='rounded-2xl bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30'>
+            <div className='w-full h-full'>
+                <video ref={videoControl} className='w-full h-full relative object-cover' autoPlay muted loop playsInline src={heroVideo}>
+                </video>
+                <PlusIcon className='plus-icon size-11 z-50 absolute top-10 left-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-50 absolute left-10 bottom-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-50 absolute right-10 bottom-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-50 absolute right-10 top-10' height="1em" />
+            </div>
         </div>
-        <div ref={scrollContainer} className='absolute inset-0 z-20 overflow-y-scroll overflow-x-hidden opacity-0 bg-transparent'>
+        <div ref={scrollContainer} className='absolute inset-0 z-40 overflow-y-scroll overflow-x-hidden opacity-0 bg-transparent'>
                 <div ref={scrollerBox} className='h-[1000vh] w-full'>
                 </div>
         </div>
@@ -159,21 +200,21 @@ export const Hero = ({cursorRef}) => {
         </div>
         <div className="w-full">
         <hr />
-        <div ref={bottomSection} className='text-xl flex justify-between max-sm:text-sm py-6 max-sm:p-0 max-sm:pt-6 max-sm:items-start  max-sm:flex-wrap'>
+        <div ref={bottomSection} className='relative text-xl flex justify-between max-sm:text-sm py-6 max-sm:p-0 max-sm:pt-6 max-sm:items-start max-sm:flex-wrap'>
             <div className='flex items-start gap-1 max-sm:hidden'>
                 <ArrowIcon height="1em" />
                 <p className='font-medium'>V3.0</p>
             </div>
-            <div className='flex font-medium  gap-3 w-full max-sm:justify-center z-20'>
+            <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 font-medium z-50 max-sm:static max-sm:translate-x-0 max-sm:translate-y-0 max-sm:w-full items-start max-sm:justify-center'>
                 <a target='_blank' href='/'><RotatableButton cursor={cursorRef} title={"BEHANCE"}/></a>
                 <span>/</span>
                 <a target='_blank' href='https://www.linkedin.com/in/sai-sagar-a1a96a256/'><RotatableButton cursor={cursorRef} title={"LINKEDIN"}/></a>
                 <span>/</span>
                 <a target='_blank' href='https://github.com/SaisagarYT'><RotatableButton cursor={cursorRef} title={"GITHUB"}/></a>
             </div>
-            <div className='flex gap-4 max-sm:w-full max-sm:justify-center'>
-                <RotatableButton cursor={cursorRef} title={"WORK"}/>
+            <div className='flex gap-4 max-sm:w-full max-sm:justify-center z-50'>
                 <RotatableButton cursor={cursorRef} title={"INFO"}/>
+                <RotatableButton cursor={cursorRef} title={"WORK"}/>
                 <RotatableButton cursor={cursorRef} title={"CONTACT"}/>
             </div>
         </div>
