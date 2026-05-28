@@ -27,13 +27,14 @@ export const Hero = ({cursorRef}) => {
         [leftText.current, rightText.current],
         {
             y: 500,
+            duration:5
         },
         {
             y: 0,
             duration: 1.2,
             ease: "power4.out",
             stagger: 0.15,
-            zIndex:10
+            zIndex:10,
         }
     );
 
@@ -58,7 +59,7 @@ export const Hero = ({cursorRef}) => {
                 top: "50%",
                 opacity: 1,
                 ease: "none",
-                duration: 0.3,
+                duration: 2.3,
                 zIndex:10
             }
         )
@@ -72,9 +73,9 @@ export const Hero = ({cursorRef}) => {
                 x: 0,
             },
             {
-                x: -240,
+                x: -840,
                 ease: "none",
-                duration: 0.35,
+                duration: 5.35,
                 zIndex:10
             },
             0.35
@@ -85,9 +86,9 @@ export const Hero = ({cursorRef}) => {
                 x: 0,
             },
             {
-                x: 240,
+                x: 940,
                 ease: "none",
-                duration: 0.35,
+                duration: 5.35,
                 zIndex:10
             },
             0.35
@@ -103,9 +104,10 @@ export const Hero = ({cursorRef}) => {
                 height:"100vh",
                 borderRadius:"0px",
                 left:"50%",
-                zIndex:20
+                zIndex:20,
+                duration:5,
             }
-            ,"-=0.3"
+            ,"-=3.3"
         )
         .fromTo(
             ".plus-icon",
@@ -116,7 +118,26 @@ export const Hero = ({cursorRef}) => {
                 opacity: 1,
                 stagger: 0.08,
             },
+            "-=0.3"
+        )
+        .fromTo(mySummeryPage.current,
+            {
+                opacity:0,
+            },
+            {
+                opacity:1,
+            },
             "-=0.4"
+        )
+        .fromTo(mySummeryPage.current,
+            {
+                yPercent:0,
+            },
+            {
+                yPercent:-600,
+                ease:'power3.inOut',
+                duration:10,
+            }
         )
         .fromTo(
             currentRotate.current,
@@ -137,18 +158,6 @@ export const Hero = ({cursorRef}) => {
             },
             0
         )
-        .fromTo(mySummeryPage.current,
-            {
-                width:0,
-                height:0,
-            },
-            {
-                width:"100vw",
-                height:"100vh",
-                left:0,
-                top:0
-            }
-        )
     return () => {
         splitTimeline.scrollTrigger?.kill();
         splitTimeline.kill();
@@ -161,18 +170,40 @@ export const Hero = ({cursorRef}) => {
   return(
     <section className="hero-container overflow-hidden w-full h-screen flex flex-col justify-between px-12 pt-12 max-sm:px-6 max-sm:pt-6 bg-black text-white relative">
         <div ref={centerImageCard} className='rounded-2xl bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30'>
-            <div className='w-full h-full'>
+            <div className='w-full h-full flex flex-col relative'>
                 <video ref={videoControl} className='w-full h-full relative object-cover' autoPlay muted loop playsInline src={heroVideo}>
                 </video>
-                <PlusIcon className='plus-icon size-11 z-50 absolute top-10 left-10' height="1em" />
-                <PlusIcon className='plus-icon size-11 z-50 absolute left-10 bottom-10' height="1em" />
-                <PlusIcon className='plus-icon size-11 z-50 absolute right-10 bottom-10' height="1em" />
-                <PlusIcon className='plus-icon size-11 z-50 absolute right-10 top-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-10 absolute top-10 left-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-10 absolute left-10 bottom-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-10 absolute right-10 bottom-10' height="1em" />
+                <PlusIcon className='plus-icon size-11 z-10 absolute right-10 top-10' height="1em" />
+                <div ref={mySummeryPage} className=' w-screen h-screen  bg-amber-200'>
+                    <div className='w-screen h-screen justify-end flex bg-black'>
+                        <div className='flex w-full shadow-2xl absolute h-full gap-28 items-start p-20 flex-col '>
+                            <h1 className='text-6xl w-2/3'>As a <span className='lobster-regular'>creative developer,</span> I craft tailor-made web experiences, blending technical precision and <span className='lobster-regular'>emotion</span>.</h1>
+                            <div className='w-full flex items-center pl-60'>
+                             <p className='text-3xl w-2/6'>My name is Luke. A passionate creator and computer science student in Vannes, I build memorable digital experiences, always seeking the symbiosis between art and information.</p>
+                            </div>
+                        </div>
+                        <div className='w-2/5 rounded-l-[350px] bg-red-400'>
+
+                        </div>
+                    </div>
+                    <div className='w-screen h-screen bg-green-200'>
+
+                    </div>
+                    <div className='w-screen h-[300vh] bg-purple-200'>
+
+                    </div>
+                    <div className='w-screen h-screen bg-orange-200'>
+
+                    </div>
+                </div>
             </div>
         </div>
         <div ref={scrollContainer} className='absolute inset-0 z-40 overflow-y-scroll overflow-x-hidden opacity-0 bg-transparent'>
-                <div ref={scrollerBox} className='h-[1000vh] w-full'>
-                </div>
+            <div ref={scrollerBox} className='h-[1000vh] w-full'>
+            </div>
         </div>
         <Spline className='absolute top-0 left-0 ' scene='https://prod.spline.design/nkqqLV4dhpjT0yRr/scene.splinecode'/>
         <div className="w-full max-sm:pt-6 max-sm:pl-6">
@@ -205,7 +236,7 @@ export const Hero = ({cursorRef}) => {
                 <ArrowIcon height="1em" />
                 <p className='font-medium'>V3.0</p>
             </div>
-            <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 font-medium z-50 max-sm:static max-sm:translate-x-0 max-sm:translate-y-0 max-sm:w-full items-start max-sm:justify-center'>
+            <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 gap-3 font-medium z-50 max-sm:static max-sm:translate-x-0 max-sm:translate-y-0 max-sm:w-full items-start max-sm:justify-center'>
                 <a target='_blank' href='/'><RotatableButton cursor={cursorRef} title={"BEHANCE"}/></a>
                 <span>/</span>
                 <a target='_blank' href='https://www.linkedin.com/in/sai-sagar-a1a96a256/'><RotatableButton cursor={cursorRef} title={"LINKEDIN"}/></a>
