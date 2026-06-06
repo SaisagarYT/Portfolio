@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 import { RotatableButton } from '../components/reusable/RotatableButton';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import heroVideo from '../assets/videos/14520076_1920_1080_24fps.mp4';
+import heroVideo from '../assets/videos/hey_i_need_your_help_to_create.mp4';
 import PlusIcon from '@iconify-react/uiw/plus';
 
 export const Hero = ({cursorRef}) => {
@@ -42,7 +42,10 @@ export const Hero = ({cursorRef}) => {
             {
                 y:100,
                 autoAlpha:0,
-                stagger:0.09,
+                stagger:{
+                    amount:0.5,
+                    from:"center"
+                }
             }
         )
         .fromTo(initialLoadingScreen1.current,
@@ -97,14 +100,6 @@ export const Hero = ({cursorRef}) => {
     });
 
     splitTimeline
-        .fromTo(splashTitle.current,
-            {
-
-            },
-            {
-
-            }
-        )
         .fromTo(
             titleWrap.current,
             {
@@ -227,7 +222,7 @@ export const Hero = ({cursorRef}) => {
     <section className="hero-container merriweather-sans overflow-hidden w-full h-screen flex flex-col justify-between px-12 pt-12 max-sm:px-6 max-sm:pt-6 bg-black text-white relative">
         {/* Initial loading screen-1 */}
         <div ref={initialLoadingScreen1} className='w-screen absolute flex justify-center items-center bg-black right-0 z-60 top-0 h-screen'>
-            <h1 ref={splashTitle} className='text-9xl text-white'><span ref={splashTitleLeft} className=''>Sagar</span> <span ref={splashTitleRight} className=''>Sailad</span></h1>
+            <h1 ref={splashTitle} className='text-9xl text-white'><span ref={splashTitleLeft} className=''>Sagar</span> <span ref={splashTitleRight} className='lobster-regular'>Sailad</span></h1>
         </div>
         {/* Initial loading screen-2 */}
         <div ref={initialLoadingScreen2} className='w-screen h-screen absolute bg-red-600 top-0 right-0'>
