@@ -1,5 +1,6 @@
 import ArrowIcon from '@iconify-react/maki/arrow';
-import Spline from '@splinetool/react-spline';
+// import Spline from '@splinetool/react-spline';
+import SplitText from 'gsap/src/SplitText';
 import { useEffect, useRef } from 'react';
 import { gsap } from "gsap";
 import { RotatableButton } from '../components/reusable/RotatableButton';
@@ -21,7 +22,53 @@ export const Hero = ({cursorRef}) => {
     const videoControl = useRef(null);
     const mySummeryPage = useRef(null);
     // const nextRotate = useRef(null);
+
+    const initialLoadingScreen1 = useRef(null);
+    const initialLoadingScreen2 = useRef(null);
+    const splashTitle = useRef(null);
+    const splashTitleLeft = useRef(null);
+    const splashTitleRight = useRef(null);
     useEffect(() => {
+        gsap.registerPlugin(SplitText);
+        let titleSplit = SplitText.create(
+            splashTitle.current,{
+                type:"words, chars"
+            }
+        )
+        const splashScreen = gsap.timeline();
+
+        splashScreen
+        .from(titleSplit.chars,
+            {
+                y:100,
+                autoAlpha:0,
+                stagger:0.09,
+            }
+        )
+        .fromTo(initialLoadingScreen1.current,
+            {
+                top:0,
+                right:0,
+                z:70
+            },
+            {
+                yPercent:-100,
+                duration:1.2,
+                z:70
+            }
+        )
+        .fromTo(initialLoadingScreen2.current,
+            {
+                z:80,
+            },
+            {
+                yPercent:-100,
+                duration:1.2,
+                z:70
+            },
+            "-=1"
+        )
+
     gsap.registerPlugin(ScrollTrigger);
     gsap.fromTo(
         [leftText.current, rightText.current],
@@ -35,7 +82,8 @@ export const Hero = ({cursorRef}) => {
             ease: "power4.out",
             stagger: 0.15,
             zIndex:10,
-        }
+        },
+        "+=0.1"
     );
 
     const splitTimeline = gsap.timeline({
@@ -49,6 +97,14 @@ export const Hero = ({cursorRef}) => {
     });
 
     splitTimeline
+        .fromTo(splashTitle.current,
+            {
+
+            },
+            {
+
+            }
+        )
         .fromTo(
             titleWrap.current,
             {
@@ -168,7 +224,15 @@ export const Hero = ({cursorRef}) => {
 
     
   return(
-    <section className="hero-container overflow-hidden w-full h-screen flex flex-col justify-between px-12 pt-12 max-sm:px-6 max-sm:pt-6 bg-black text-white relative">
+    <section className="hero-container merriweather-sans overflow-hidden w-full h-screen flex flex-col justify-between px-12 pt-12 max-sm:px-6 max-sm:pt-6 bg-black text-white relative">
+        {/* Initial loading screen-1 */}
+        <div ref={initialLoadingScreen1} className='w-screen absolute flex justify-center items-center bg-black right-0 z-60 top-0 h-screen'>
+            <h1 ref={splashTitle} className='text-9xl text-white'><span ref={splashTitleLeft} className=''>Sagar</span> <span ref={splashTitleRight} className=''>Sailad</span></h1>
+        </div>
+        {/* Initial loading screen-2 */}
+        <div ref={initialLoadingScreen2} className='w-screen h-screen absolute bg-red-600 top-0 right-0'>
+
+        </div>
         <div ref={centerImageCard} className='rounded-2xl bg-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-30'>
             <div className='w-full h-full flex flex-col relative'>
                 <video ref={videoControl} className='w-full h-full relative object-cover' autoPlay muted loop playsInline src={heroVideo}>
@@ -205,7 +269,7 @@ export const Hero = ({cursorRef}) => {
             <div ref={scrollerBox} className='h-[1000vh] w-full'>
             </div>
         </div>
-        <Spline className='absolute top-0 left-0 ' scene='https://prod.spline.design/nkqqLV4dhpjT0yRr/scene.splinecode'/>
+        {/* <Spline className='absolute top-0 left-0 ' scene='https://prod.spline.design/nkqqLV4dhpjT0yRr/scene.splinecode'/> */}
         <div className="w-full max-sm:pt-6 max-sm:pl-6">
         <p ref={currentRotate} className="merriweather-sans"> <span  ref={smallLine1}>Quiet creator, <span className="lobster-regular">bringing ideas to life</span></span>,<br/> <span ref={smallLine2}>through motion, detail and softness</span> </p>
         {/*<p ref={nextRotate} className="merriweather-sans"> <span  ref={smallLine1}>Quiet creator, <span className="lobster-regular">bringing ideas to life</span></span>,<br/> <span ref={smallLine2}>through motion, detail and softness</span> </p>*/}
